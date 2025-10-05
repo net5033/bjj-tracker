@@ -1,98 +1,86 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { useState } from "react";
+import { View } from "react-native";
+import { Appbar, Chip, Text } from "react-native-paper";
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [type, setType] = useState<
+    | null
+    | "class"
+    | "openMat"
+    | "competition"
+    | "oneOnOneCoaching"
+    | "seminar"
+    | "media"
+    | "other"
+  >(null);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  return (
+    <View>
+      <Appbar.Header>
+        <Appbar.Content title="Log New Event" />
+      </Appbar.Header>
+      <View style={{ marginTop: 16, marginLeft: 16 }}>
+        <Text variant="labelLarge">Type</Text>
+      </View>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          gap: 8,
+          padding: 16,
+        }}
+      >
+        <Chip
+          selected={type === "class"}
+          mode="outlined"
+          onPress={() => setType("class")}
+        >
+          Class
+        </Chip>
+        <Chip
+          selected={type === "openMat"}
+          mode="outlined"
+          onPress={() => setType("openMat")}
+        >
+          Open Mat
+        </Chip>
+        <Chip
+          selected={type === "competition"}
+          mode="outlined"
+          onPress={() => setType("competition")}
+        >
+          Competition
+        </Chip>
+        <Chip
+          selected={type === "oneOnOneCoaching"}
+          mode="outlined"
+          onPress={() => setType("oneOnOneCoaching")}
+        >
+          One on One Coaching
+        </Chip>
+        <Chip
+          selected={type === "seminar"}
+          mode="outlined"
+          onPress={() => setType("seminar")}
+        >
+          Seminar
+        </Chip>
+        <Chip
+          selected={type === "media"}
+          mode="outlined"
+          onPress={() => setType("media")}
+        >
+          Media
+        </Chip>
+        <Chip
+          selected={type === "other"}
+          mode="outlined"
+          onPress={() => setType("other")}
+        >
+          Other
+        </Chip>
+      </View>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
