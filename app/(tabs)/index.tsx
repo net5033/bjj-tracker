@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View } from "react-native";
-import { Appbar, Chip, Text } from "react-native-paper";
+import { Appbar, Button, Chip, Text, TextInput } from "react-native-paper";
 
 export default function HomeScreen() {
   const [type, setType] = useState<
@@ -13,6 +13,9 @@ export default function HomeScreen() {
     | "media"
     | "other"
   >(null);
+
+  const [locationText, setLocationText] = useState<string>("");
+  const [notesText, setNotesText] = useState<string>("");
 
   return (
     <View>
@@ -80,6 +83,33 @@ export default function HomeScreen() {
         >
           Other
         </Chip>
+      </View>
+      <View>
+        <TextInput
+          label="Location"
+          value={locationText}
+          onChangeText={(text) => setLocationText(text)}
+          style={{ margin: 16 }}
+        />
+      </View>
+      <View>
+        <TextInput
+          label="Notes"
+          value={notesText}
+          onChangeText={(text) => setNotesText(text)}
+          style={{ margin: 16 }}
+          multiline
+          numberOfLines={10}
+        />
+      </View>
+      <View>
+        <Button
+          mode="contained"
+          style={{ margin: 16 }}
+          onPress={() => console.log("saving")}
+        >
+          Save
+        </Button>
       </View>
     </View>
   );
